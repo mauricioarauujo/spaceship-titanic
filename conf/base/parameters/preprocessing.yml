@@ -1,5 +1,4 @@
 preprocessing:
-  drop_features: ["VIP", "Solo"]
   filter_cat_features: {
     "Cabin_Deck": ["A", "D", "F", "T"],
     "Cabin_Region": ["G", "F"],

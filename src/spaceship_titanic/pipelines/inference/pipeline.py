@@ -8,7 +8,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=prepare_inference_data,
-                inputs=["test", "parameters"],
+                inputs=["test", "params:preprocessing", "parameters"],
                 outputs="inference_data",
                 name="prepare_inference_data_node",
             ),

@@ -6,6 +6,7 @@ from kedro.pipeline import Pipeline
 import spaceship_titanic.pipelines.inference as inference
 import spaceship_titanic.pipelines.preprocessing as preprocessing
 import spaceship_titanic.pipelines.training as training
+import spaceship_titanic.pipelines.tuning as tuning
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -16,10 +17,11 @@ def register_pipelines() -> Dict[str, Pipeline]:
     """
 
     return {
-        "__default__": preprocessing.create_pipeline() + training.create_pipeline()
-        # + inference.create_pipeline()
-        ,
+        "__default__": preprocessing.create_pipeline()
+        + training.create_pipeline()
+        + inference.create_pipeline(),
         "pp": preprocessing.create_pipeline(),
-        "tp": training.create_pipeline(),
-        "ip": inference.create_pipeline(),
+        "train": preprocessing.create_pipeline() + training.create_pipeline(),
+        "tune": preprocessing.create_pipeline() + tuning.create_pipeline(),
+        "inference": inference.create_pipeline(),
     }

@@ -126,7 +126,7 @@ def get_tuning_grid(
                 "classifier__C": [0.1, 1, 10, 100],
                 "classifier__gamma": [0.1, 1, 10, 100],
                 "classifier__kernel": ["linear", "poly"],
-                "classifier__degree": [1, 2, 3],
+                "classifier__degree": [1, 2],
             },
         },
     }

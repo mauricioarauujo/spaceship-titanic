@@ -7,7 +7,9 @@ import pandas as pd
 from spaceship_titanic.pipelines.preprocessing.nodes import preprocess_data
 
 
-def prepare_inference_data(data: pd.DataFrame, parameters: Dict) -> pd.DataFrame:
+def prepare_inference_data(
+    data: pd.DataFrame, params: Dict, parameters: Dict
+) -> pd.DataFrame:
     """Prepare the inference data.
 
     Args:
@@ -17,7 +19,7 @@ def prepare_inference_data(data: pd.DataFrame, parameters: Dict) -> pd.DataFrame
         The prepared data.
 
     """
-    inference_data = preprocess_data(data, parameters)
+    inference_data = preprocess_data(data, params, parameters)
     return inference_data
 
 

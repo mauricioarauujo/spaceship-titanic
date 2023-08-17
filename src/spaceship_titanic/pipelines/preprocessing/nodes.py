@@ -27,10 +27,6 @@ def preprocess_data(input_data: pd.DataFrame, params: Dict, parameters: Dict):
     processed_data = create_counts_from_cat_features(processed_data)
     processed_data = create_age_cat_features(processed_data)
 
-    processed_data["Solo"] = (processed_data["Group_Size"] == 1).astype(int)
-
-    processed_data = processed_data.drop(columns=params["drop_features"])
-
     for feature in params["filter_cat_features"].keys():
         processed_data[feature] = np.where(
             processed_data[feature].isin(params["filter_cat_features"][feature]),
