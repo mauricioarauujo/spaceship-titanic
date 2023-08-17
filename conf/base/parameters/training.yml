@@ -8,6 +8,5 @@ model_options:
     "xgboost",
     "lightgbm",
     "random_forest",
-    "logistic_regression",
     "support_vector"
   ]

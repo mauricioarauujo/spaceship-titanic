@@ -2,9 +2,9 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 from .nodes import (
     evaluate_candidate_models,
+    gen_inference_model,
     split_data,
     tune_candidate_models,
-    gen_inference_model
 )
 
 

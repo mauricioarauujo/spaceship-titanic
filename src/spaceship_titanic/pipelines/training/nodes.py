@@ -1,18 +1,20 @@
+import copy
 import logging
-from typing import Dict, Tuple
 import os
-import pandas as pd
-import numpy as np
+from typing import Dict, Tuple
+
 import matplotlib.pyplot as plt
-from sklearn.pipeline import Pipeline
-from sklearn.model_selection import RandomizedSearchCV, train_test_split
-from sklearn.metrics import accuracy_score, roc_auc_score
 import mlflow
+import numpy as np
+import pandas as pd
+from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.model_selection import RandomizedSearchCV, train_test_split
+from sklearn.pipeline import Pipeline
+
+from .tuning_configs import get_tuning_grid
+
 # import shap
 from .utils import get_train_data
-from .tuning_configs import get_tuning_grid
-import copy
-
 
 logger = logging.getLogger(__name__)
 
@@ -37,9 +39,9 @@ def split_data(modeling_data: pd.DataFrame, params: Dict, parameters: Dict) -> T
     return X_train, X_test, y_train.to_frame(), y_test.to_frame()
 
 
-def tune_candidate_models(X_train: pd.DataFrame,
-                          y_train: pd.DataFrame,
-                          params: Dict) -> None:
+def tune_candidate_models(
+    X_train: pd.DataFrame, y_train: pd.DataFrame, params: Dict
+) -> None:
     """Tuna diferentes modelos e pega o melhor nos dados de teste.
 
     Args:
@@ -52,15 +54,14 @@ def tune_candidate_models(X_train: pd.DataFrame,
 
     # Definindo as etapas de pré-processamento do pipeline
     numeric_features = X_train.select_dtypes(include=[np.number]).columns.tolist()
-    categorical_features = X_train.select_dtypes(include=['object']).columns.tolist()
+    categorical_features = X_train.select_dtypes(include=["object"]).columns.tolist()
     mlflow.log_param("numeric_features", numeric_features)
     mlflow.log_param("categorical_features", categorical_features)
+    logger.info(f"Total Features: {len(numeric_features + categorical_features)}")
 
     for grid_name in params["grid_names"]:
         logger.info(f"Tuning {grid_name} model")
-        tuning_grid = get_tuning_grid(grid_name,
-                                      numeric_features,
-                                      categorical_features)
+        tuning_grid = get_tuning_grid(grid_name, numeric_features, categorical_features)
 
         param_grid = tuning_grid["param_grid"]
         pipeline = tuning_grid["pipeline"]
@@ -72,7 +73,7 @@ def tune_candidate_models(X_train: pd.DataFrame,
             n_iter=params["n_iter"],
             cv=5,
             scoring=params["scoring"],
-            verbose=0
+            verbose=0,
         )
 
         tuning.fit(X_train, y_train.values.ravel())
@@ -83,14 +84,14 @@ def tune_candidate_models(X_train: pd.DataFrame,
         model = tuning.best_estimator_
         best_score = round(tuning.best_score_, 3)
         mlflow.sklearn.log_model(model, grid_name)
-        mlflow.log_metric(f"{grid_name}_best_score", best_score)
-        logger.info(f"{grid_name}_best_score: {best_score} \n")
+        mlflow.log_metric(f"{grid_name}_tuning_score", best_score)
+        logger.info(f"{grid_name}_tuning_score: {best_score} \n")
 
     return pd.DataFrame()
 
 
 def evaluate_candidate_models(
-        dummy: pd.DataFrame, X_test: pd.DataFrame, y_test: pd.Series, params: Dict
+    dummy: pd.DataFrame, X_test: pd.DataFrame, y_test: pd.Series, params: Dict
 ) -> Pipeline:
     """Evaluate different tuned models.
 
@@ -119,19 +120,20 @@ def evaluate_candidate_models(
         model_resuts.append(auc)
         try:
             feature_importances = pd.Series(
-                model['classifier'].feature_importances_,
-                model[:-1].get_feature_names_out()).sort_values(ascending=True)
+                model["classifier"].feature_importances_,
+                model[:-1].get_feature_names_out(),
+            ).sort_values(ascending=True)
         except AttributeError:
             feature_importances = pd.Series(
-                model['classifier'].coef_[0],
-                model[:-1].get_feature_names_out()).sort_values(ascending=True)
+                model["classifier"].coef_[0], model[:-1].get_feature_names_out()
+            ).sort_values(ascending=True)
 
         # Crie um gráfico de barras das importâncias das features
         plt.figure(figsize=(10, 18))
         plt.barh(feature_importances.index, feature_importances.values)
-        plt.xlabel('Importância')
-        plt.ylabel('Feature')
-        plt.title(f'Importância das Features para o Modelo {grid_name}')
+        plt.xlabel("Importância")
+        plt.ylabel("Feature")
+        plt.title(f"Importância das Features para o Modelo {grid_name}")
         plt.tight_layout()
 
         # Salve o gráfico como uma imagem temporária
@@ -140,18 +142,21 @@ def evaluate_candidate_models(
         plt.close()  # Certifique-se de fechar o gráfico para liberar memória
         mlflow.log_artifact(plot_file)
         os.remove(plot_file)
-    # explainer = shap.Explainer(model[-1])
-    # shap_values = explainer(model[:-1].transform(X_test))
-    # fig = shap.summary_plot(shap_values, model[:-1].transform(X_test))
-    # mlflow.log_figure(fig, "shap_summary_plot.png")
+
+        # explainer = shap.Explainer(model[-1])
+        # shap_values = explainer(model[:-1].transform(X_test))
+        # fig = shap.summary_plot(shap_values, model[:-1].transform(X_test))
+        # mlflow.log_figure(fig, "shap_summary_plot.png")
 
     best_model_index = np.argmax(model_resuts)
     best_model_name = params["grid_names"][best_model_index]
     best_candidate_model = mlflow.sklearn.load_model(
-        f"runs:/{run_id}/{best_model_name}")
+        f"runs:/{run_id}/{best_model_name}"
+    )
     acc = np.round(accuracy_score(y_test, best_candidate_model.predict(X_test)), 3)
-    auc = np.round(roc_auc_score(
-        y_test, best_candidate_model.predict_proba(X_test)[:, 1]), 3)
+    auc = np.round(
+        roc_auc_score(y_test, best_candidate_model.predict_proba(X_test)[:, 1]), 3
+    )
 
     mlflow.log_param("best_model", best_model_name)
     mlflow.log_metric("best_model_accuracy", acc)
@@ -164,9 +169,8 @@ def evaluate_candidate_models(
 
 
 def gen_inference_model(
-        candidate_model: Pipeline,
-        modeling_data: pd.DataFrame,
-        parameters: Dict) -> Pipeline:
+    candidate_model: Pipeline, modeling_data: pd.DataFrame, parameters: Dict
+) -> Pipeline:
     """Treina o modelo com todos os dados para realizar inferência."""
     model = copy.deepcopy(candidate_model)
     features = model.feature_names_in_

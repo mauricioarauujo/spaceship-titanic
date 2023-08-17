@@ -1,0 +1,7 @@
+preprocessing:
+  drop_features: ["VIP", "Solo"]
+  filter_cat_features: {
+    "Cabin_Deck": ["A", "D", "F", "T"],
+    "Cabin_Region": ["G", "F"],
+    "Destination": [None, "PSO J318.5-22"]
+  }

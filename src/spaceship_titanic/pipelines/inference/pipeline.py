@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import prepare_inference_data, predict_inference
+from .nodes import predict_inference, prepare_inference_data
 
 
 def create_pipeline(**kwargs) -> Pipeline:

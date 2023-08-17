@@ -1,7 +1,9 @@
 """This is a boilerplate pipeline 'inference' generated using Kedro 0.18.11."""
 from typing import Dict
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+
 from spaceship_titanic.pipelines.preprocessing.nodes import preprocess_data
 
 
@@ -36,11 +38,9 @@ def predict_inference(inference_model, inference_data) -> pd.DataFrame:
     predictions = inference_model.predict(X)
 
     submission_data = pd.DataFrame(
-        {'PassengerId': inference_data['PassengerId'], 'Transported': predictions}
+        {"PassengerId": inference_data["PassengerId"], "Transported": predictions}
     )
-    submission_data['Transported'] = np.where(
-        submission_data['Transported'] == 1,
-        True,
-        False
+    submission_data["Transported"] = np.where(
+        submission_data["Transported"] == 1, True, False
     )
     return submission_data
