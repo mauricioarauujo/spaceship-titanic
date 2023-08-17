@@ -21,7 +21,7 @@ O projeto Spaceship-Titanic é uma jornada emocionante para explorar e analisar 
 3. Explore o fluxo de trabalho do Kedro em [src/](src/).
 4. Acompanhe e gerencie seus experimentos no MLflow.
 5. Execute o pipeline de treinamento com o comando: `kedro run`
-6. [EXTRA] Para executar pipelines individualmente execute o comando: `kedro run -p {nome_do_pipeline}`. Os nomes dos pipelines estão em [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py) (por exemplo, `kedro run -p pp` rodará o pipeline de preprocessamento.
+6. [EXTRA] Para executar pipelines individualmente execute o comando: `kedro run -p {nome_do_pipeline}`. Os nomes dos pipelines estão em [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py) (por exemplo, `kedro run -p pp` rodará o pipeline de preprocessamento).
 
 ## Fluxo de Trabalho
 
