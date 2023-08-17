@@ -3,35 +3,46 @@ name: CI
 on:
   push:
     branches:
-      - main  # branch que vai ser monitorarada
+      - main # branch que vai ser monitorarada
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8  
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r src/requirements.txt  # Ou o comando que você usa para instalar suas dependências
-        
-    - name: Linting
-      run: |
-        pre-commit run --all-files  # Execute pre-commit checks
-        
-    - name: Run tests
-      run: |
-        pytest -v
-    
-#    - name: Train ML model
-#      run: |
-#        kedro run
 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r src/requirements.txt  # Ou o comando que você usa para instalar suas dependências
+
+      - name: Linting
+        run: |
+          pre-commit run --all-files  # Execute pre-commit checks
+
+      - name: Run tests
+        run: |
+          pytest -v
+
+      - name: Conditionally run Tune and Evaluate candidates ML models
+        run: |
+          if [[ ${{ github.event.head_commit.message }} == *"trigger_tune_models"* ]]; then
+            kedro run --pipeline tune
+          else
+            echo "Skipping tune models step."
+          fi
+
+      - name: Conditionally run Re-Train ML model
+        run: |
+          if [[ ${{ github.event.head_commit.message }} == *"trigger_train_model"* ]]; then
+            kedro run --pipeline train
+          else
+            echo "Skipping train model step."
+          fi
