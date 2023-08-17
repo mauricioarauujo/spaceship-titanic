@@ -50,7 +50,7 @@ jobs:
       - name: Conditionally run Inference
         run: |
           if [[ ${{ github.event.head_commit.message }} == *"trigger_inference"* ]]; then
-            kedro run --pipeline train
+            kedro run --pipeline inference
           else
-            echo "Skipping train model step."
+            echo "Skipping inference step."
           fi
