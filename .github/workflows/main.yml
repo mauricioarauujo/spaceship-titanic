@@ -39,9 +39,6 @@ jobs:
             echo "Skipping tune models step."
           fi
         shell: bash
-        env:
-          pythonLocation: /opt/hostedtoolcache/Python/3.8.17/x64
-          LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.17/x64/lib
 
       - name: Conditionally run Re-Train ML model
         run: |
@@ -51,9 +48,6 @@ jobs:
             echo "Skipping train model step."
           fi
         shell: bash
-        env:
-          pythonLocation: /opt/hostedtoolcache/Python/3.8.17/x64
-          LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.17/x64/lib
       
       - name: Conditionally run Inference
         run: |
@@ -63,6 +57,3 @@ jobs:
             echo "Skipping inference step."
           fi
         shell: bash
-        env:
-          pythonLocation: /opt/hostedtoolcache/Python/3.8.17/x64
-          LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.8.17/x64/lib
