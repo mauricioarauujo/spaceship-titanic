@@ -31,29 +31,3 @@ jobs:
         run: |
           pytest -v
 
-      - name: Conditionally run Tune and Evaluate candidates ML models
-        run: |
-          if [[ ${{ github.event.head_commit.message }} == *"trigger_tune_models"* ]]; then
-            kedro run --pipeline tune
-          else
-            echo "Skipping tune models step."
-          fi
-        shell: bash
-
-      - name: Conditionally run Re-Train ML model
-        run: |
-          if [[ ${{ github.event.head_commit.message }} == *"trigger_train_model"* ]]; then
-            kedro run --pipeline train
-          else
-            echo "Skipping train model step."
-          fi
-        shell: bash
-      
-      - name: Conditionally run Inference
-        run: |
-          if [[ ${{ github.event.head_commit.message }} == *"trigger_inference"* ]]; then
-            kedro run --pipeline inference
-          else
-            echo "Skipping inference step."
-          fi
-        shell: bash
