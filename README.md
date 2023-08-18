@@ -1,66 +1,66 @@
-# Spaceship-Titanic do Kaggle com Kedro e MLflow.
+# Kaggle's Spaceship-Titanic Project with Kedro and MLflow.
 
-Bem-vindo ao repositório do projeto Spaceship-Titanic, onde exploramos e aplicamos técnicas de MLOps utilizando as ferramentas Kedro e MLflow. Neste projeto eu tenho como objetivo aprimorar minhas experiências de desenvolvimento, treinamento e implantação de modelos de Machine Learning, seguindo as melhores práticas.
+Welcome to the Spaceship-Titanic project repository, where we explore and apply MLOps techniques using the Kedro and MLflow tools. In this project, I aim to enhance my experiences in developing, training, and deploying Machine Learning models, following best practices.
 
-## Sobre o Projeto
+## About the Project
 
-O projeto Spaceship-Titanic é uma jornada emocionante para explorar e analisar o famoso conjunto de dados do Titanic disponível no Kaggle. Usamos Kedro para estruturar nosso fluxo de trabalho de ciência de dados e MLflow para rastrear e gerenciar nossos modelos. Isso nos permite alcançar um processo de desenvolvimento mais organizado e reproduzível.
+The Spaceship-Titanic project is an exciting journey to explore and analyze the famous Titanic dataset available on Kaggle. We use Kedro to structure our data science workflow and MLflow to track and manage our models. This allows us to achieve a more organized and reproducible development process.
 
-## Características Principais
+## Key Features
 
-- Estruturação do projeto usando Kedro para uma organização escalável e modular.
-- Utilização do MLflow para rastrear métricas, experimentos e versões de modelo.
-- Implementação de um pipeline de pré-processamento de dados para garantir consistência.
-- Treinamento de modelos de Machine Learning com acompanhamento de métricas e parâmetros.
-- Implantação de modelos de forma automatizada, garantindo a consistência do ambiente.
+- Project structuring using Kedro for scalable and modular organization.
+- Utilization of MLflow to track metrics, experiments, and model versions.
+- Implementation of a data preprocessing pipeline to ensure consistency.
+- Training of Machine Learning models with tracking of metrics and parameters.
+- Automated model deployment to ensure environment consistency.
 
-## Como Começar
+## Getting Started
 
-1. Clone este repositório: `git clone https://github.com/mauricioarauujo/spaceship-titanic.git`
-2. Instale as dependências necessárias: `make install` para rodagem e `make install-dev` para desenvolvimento.
-3. Explore o fluxo de trabalho do Kedro em [src/](src/).
-4. Acompanhe e gerencie seus experimentos no MLflow.
-5. Execute o pipeline de treinamento com o comando: `kedro run`
-6. Para visualizações de experimentos/rodagens e modelos salvos com mlflow execute o comando: `kedro mlflow ui`
-7. [EXTRA] Para executar pipelines individualmente execute o comando: `kedro run -p {nome_do_pipeline}`. Os nomes dos pipelines estão em [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py) (por exemplo, `kedro run -p pp` rodará o pipeline de preprocessamento).
+1. Clone this repository: `git clone https://github.com/mauricioarauujo/spaceship-titanic.git`
+2. Install the necessary dependencies: `make install` for runtime and `make install-dev` for development.
+3. Explore the Kedro workflow in [src/](src/).
+4. Monitor and manage your experiments in MLflow.
+5. Run the training pipeline with the command: `kedro run`
+6. For experiment/run visualizations and models saved with MLflow, run the command: `kedro mlflow ui`
+7. [EXTRA] To run individual pipelines, execute the command: `kedro run -p {pipeline_name}`. Pipeline names are in [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py) (for example, `kedro run -p pp` will run the preprocessing pipeline).
 
-## Fluxo de Trabalho
+## Workflow
 
-Nosso fluxo de trabalho segue a estrutura do Kedro:
+Our workflow follows the Kedro structure:
 
-- **src/**: Contém os módulos do projeto e seus pipelines.
-- **conf/base/**: Configurações de projeto compartilhadas.
-- **conf/local/**: Configurações específicas do ambiente local (não sobem para o git).
-- **notebooks/**: Notebooks interativos para análise e visualização dos dados.
-- **data/**: Armazena dados brutos, intermediários e processados.
-- **mlruns/**: É criada após primeira rodagem. Armazenas todas as informações (logs, modelos, parametros, metricas) referentes ao mlflow.
+- **src/**: Contains project modules and their pipelines.
+- **conf/base/**: Shared project configurations.
+- **conf/local/**: Environment-specific configurations (not pushed to git).
+- **notebooks/**: Interactive notebooks for data analysis and visualization.
+- **data/**: Stores raw, intermediate, and processed data.
+- **mlruns/**: Created after the first run. Stores all information (logs, models, parameters, metrics) related to MLflow.
 
 ## Pipeline Registry
 
-- `__default__`: com apenas `kedro run`, será rodado o pipeline de preprocessamento, re-treino e inferencia nos dados de submissão.
-- `pp`: Pre-processamento
-- `train`: Pre-processamento + re-treino.
-- `tune`: Pre-processamento + tunagem de diferentes modelos candidatos.
-- `inference`: Pega o modelo em produção e faz a inferência nos dados de submissão.
+- `__default__`: With just `kedro run`, the preprocessing, retraining, and submission data inference pipelines will run.
+- `pp`: Preprocessing
+- `train`: Preprocessing + retraining.
+- `tune`: Preprocessing + tuning of different candidate models.
+- `inference`: Takes the production model and performs inference on submission data.
 
 ## Pipelines
 
-- `pp`: Onde é tratado o dado e gerado as features. Esse pipeline é reaproveitado no momento de inferência.
+- `pp`: Where the data is processed and features are generated. This pipeline is reused during inference.
   
-- `train`: É carregado e re-treinado o modelo em produção com os novos dados. O modelo em produção só é substituído pelo re-treinado quando a perfomance do modelo re-treinado for pelo menos 3% superior a performance do modelo vigente não re-treinado nos novos dados de teste. Tal verificação não faz sentido para o projeto em questão já que os dados são estáticos.
+- `train`: The production model is loaded and retrained with new data. The production model is replaced by the retrained model only when the retrained model's performance on the new test data is at least 3% better than the performance of the current untrained model. Such verification does not make sense for this project since the data is static.
   
-- `tune`: Dentre uma série de modelos candidatos é tunado cada modelo nos dados de treino e é pego o que melhor performa nos dados de teste. Após isso, é verificado automaticamente se este modelo é superior ao modelo em produção atual, se sim, tal modelo é registrado em staging. Se não houver modelo em produção (primeira rodagem, por exemplo), o modelo candidato é salvo automaticamente se sua performance for superior a um dado threshold.
+- `tune`: Among a series of candidate models, each model is tuned with training data, and the model that performs best on test data is selected. Afterward, it is automatically verified if this model is superior to the current production model; if yes, this model is registered in staging. If there is no production model (for example, the first run), the candidate model is automatically saved if its performance is better than a given threshold.
   
-- `inference`: É utilizado o pipeline de pre-processamento para gerar as mesmas features e o dado de entrada estar nos mesmos formatos dos dados que foram usados nos treinos. Com o modelo em produção, é gerado o arquivo de submissão para a competição no formato csv. 
+- `inference`: In the submission competition's feature data, the same preprocessing and data treatments as the training data are applied. Upon these data, the production model is used to generate the submission csv file with IDs and predictions.
 
-## Contribuição
+## Contribution
 
-Adoramos contribuições! Sinta-se à vontade para criar pull requests ou abrir problemas para discutir melhorias e novas ideias. 
+Feel free to create pull requests or open issues to discuss improvements and new ideas.
 
-## Licença
+## License
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Desenvolvido por Mauricio Araujo (https://github.com/mauricioarauujo)
+Developed by Mauricio Araujo (https://github.com/mauricioarauujo)
