@@ -1,5 +1,13 @@
-# This is a boilerplate parameters config generated for pipeline 'tuning'
-# using Kedro 0.18.12.
-#
-# Documentation for this file format can be found in "Parameters"
-# Link: https://docs.kedro.org/en/0.18.12/kedro_project_setup/configuration.html#parameters
+tuning:
+  test_size: 0.2
+  random_state: 3
+  n_iter: 40
+  scoring: "roc_auc"
+  
+  grid_names: [
+    "xgboost",
+    "lightgbm",
+    "random_forest"
+  ]
+
+  min_accuracy_score: 0.78

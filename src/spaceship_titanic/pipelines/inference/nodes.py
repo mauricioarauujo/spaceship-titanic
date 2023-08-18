@@ -1,6 +1,8 @@
 """This is a boilerplate pipeline 'inference' generated using Kedro 0.18.11."""
 from typing import Dict
+from venv import logger
 
+import mlflow
 import numpy as np
 import pandas as pd
 
@@ -23,17 +25,21 @@ def prepare_inference_data(
     return inference_data
 
 
-def predict_inference(inference_model, inference_data) -> pd.DataFrame:
+def predict_inference(inference_data: pd.DataFrame, parameters: Dict) -> pd.DataFrame:
     """Predict the inference data.
 
     Args:
-        inference_model: The model to use for prediction.
         inference_data: The data to predict.
+        parameters: Global parameters.
 
     Returns:
         The predicted data.
 
     """
+    logger.info("Predicting submission data...")
+    inference_model = mlflow.sklearn.load_model(
+        model_uri=f"models:/{parameters['model_name']}/Production"
+    )
     features = inference_model.feature_names_in_
 
     X = inference_data[features]
@@ -45,4 +51,5 @@ def predict_inference(inference_model, inference_data) -> pd.DataFrame:
     submission_data["Transported"] = np.where(
         submission_data["Transported"] == 1, True, False
     )
+    logger.info("Submission data predicted.")
     return submission_data

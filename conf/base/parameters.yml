@@ -1,3 +1,5 @@
 col_maps:
   TARGET_COL: "Transported"
   ID_COL: "PassengerId"
+
+model_name: "spaceship_titanic_model"

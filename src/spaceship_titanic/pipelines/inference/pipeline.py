@@ -14,7 +14,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=predict_inference,
-                inputs=["model", "inference_data"],
+                inputs=["inference_data", "parameters"],
                 outputs="submission_data",
                 name="predict_inference_node",
             ),

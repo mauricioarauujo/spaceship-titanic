@@ -1,8 +1,8 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
 from .nodes import (
+    compare_candidate_model,
     evaluate_candidate_models,
-    gen_inference_model,
     split_data,
     tune_candidate_models,
 )
@@ -13,27 +13,35 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=split_data,
-                inputs=["modeling_data", "params:model_options", "parameters"],
+                inputs=["modeling_data", "params:tuning", "parameters"],
                 outputs=["X_train", "X_test", "y_train", "y_test"],
                 name="split_data_node",
             ),
             node(
                 func=tune_candidate_models,
-                inputs=["X_train", "y_train", "params:model_options"],
-                outputs="dummy",
+                inputs=["X_train", "y_train", "params:tuning"],
+                outputs="dummy",  # forçando a ordem de rodagem
                 name="train_model_node",
             ),
             node(
                 func=evaluate_candidate_models,
-                inputs=["dummy", "X_test", "y_test", "params:model_options"],
-                outputs="candidate_model",
+                inputs=["dummy", "X_test", "y_test", "params:tuning"],
+                outputs="candidate_model",  # forçando a ordem de rodagem
                 name="evaluate_model_node",
             ),
             node(
-                func=gen_inference_model,
-                inputs=["candidate_model", "modeling_data", "parameters"],
-                outputs="model",
-                name="gen_inference_model_node",
+                func=compare_candidate_model,
+                inputs=[
+                    "candidate_model",
+                    "X_train",
+                    "y_train",
+                    "X_test",
+                    "y_test",
+                    "params:tuning",
+                    "parameters",
+                ],
+                outputs=None,
+                name="compare_candidate_model_node",
             ),
         ]
     )

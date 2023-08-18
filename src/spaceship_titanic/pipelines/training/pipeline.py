@@ -1,16 +1,23 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import gen_inference_model
+from .nodes import re_train_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
         [
             node(
-                func=gen_inference_model,
-                inputs=["candidate_model", "modeling_data", "parameters"],
-                outputs="model",
-                name="gen_inference_model_node",
+                func=re_train_model,
+                inputs=[
+                    "X_train",
+                    "y_train",
+                    "X_test",
+                    "y_test",
+                    "params:training",
+                    "parameters",
+                ],
+                outputs=None,
+                name="re_train_model_node",
             ),
         ]
     )
