@@ -19,14 +19,6 @@ In this project, we have applied MLOps practices, including:
 
 We are pleased to share our journey of learning and applying MLOps with you in this project.
 
-## Key Features
-
-- Project structuring using Kedro for scalable and modular organization.
-- Utilization of MLflow to track metrics, experiments, and model versions.
-- Implementation of a data preprocessing pipeline to ensure consistency.
-- Training of Machine Learning models with tracking of metrics and parameters.
-- Automated model deployment to ensure environment consistency.
-
 ## Getting Started
 
 1. Clone this repository: `git clone https://github.com/mauricioarauujo/spaceship-titanic.git`
