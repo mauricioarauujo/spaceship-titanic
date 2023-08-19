@@ -19,9 +19,9 @@ In this project, we have applied MLOps practices, including:
 
 We are pleased to share our journey of learning and applying MLOps with you in this project.
 
-## Workflow
+## Directories
 
-Our workflow follows the Kedro structure:
+Our directories follow the Kedro structure:
 
 - **src/**: Contains project modules and their pipelines.
 - **conf/base/**: Shared project configurations.
@@ -29,6 +29,12 @@ Our workflow follows the Kedro structure:
 - **notebooks/**: Interactive notebooks for data analysis and visualization.
 - **data/**: Stores raw, intermediate, and processed data.
 - **mlruns/**: Created after the first run. Stores all information (logs, models, parameters, metrics) related to MLflow.
+
+More info: [Kedro Architure Overview](https://docs.kedro.org/en/0.18.3/faq/architecture_overview.html#:~:text=Kedro%20project&text=The%20conf%2F%20directory%2C%20which%20contains,source%20code%20for%20your%20pipelines.)
+
+## Workflow
+
+![image](https://github.com/mauricioarauujo/spaceship-titanic/assets/58861384/b9beb62c-4afc-48ff-8a27-1107a0b8733e)
 
 ## Pipelines
 
