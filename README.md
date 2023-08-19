@@ -19,16 +19,6 @@ In this project, we have applied MLOps practices, including:
 
 We are pleased to share our journey of learning and applying MLOps with you in this project.
 
-## Getting Started
-
-1. Clone this repository: `git clone https://github.com/mauricioarauujo/spaceship-titanic.git`
-2. Install the necessary dependencies: `make install` for runtime and `make install-dev` for development.
-3. Explore the Kedro workflow in [src/](src/).
-4. Monitor and manage your experiments in MLflow.
-5. Run the training pipeline with the command: `kedro run`
-6. For experiment/run visualizations and models saved with MLflow, run the command: `kedro mlflow ui`
-7. [EXTRA] To run individual pipelines, execute the command: `kedro run -p {pipeline_name}`. Pipeline names are in [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py) (for example, `kedro run -p pp` will run the preprocessing pipeline).
-
 ## Workflow
 
 Our workflow follows the Kedro structure:
@@ -58,6 +48,17 @@ Our workflow follows the Kedro structure:
   
 - `inference`: In the submission competition's feature data, the same preprocessing and data treatments as the training data are applied. Upon these data, the production model is used to generate the submission csv file with IDs and predictions.
 
+## Getting Started
+
+1. Clone this repository: `git clone https://github.com/mauricioarauujo/spaceship-titanic.git`
+2. Install the necessary dependencies: `make install` for runtime and `make install-dev` for development.
+3. Explore the Kedro workflow in [src/](src/).
+4. Monitor and manage your experiments in MLflow.
+5. Run the training pipeline with the command: `kedro run`
+6. For experiment/run visualizations and models saved with MLflow, run the command: `kedro mlflow ui`
+7. [EXTRA] To run individual pipelines, execute the command: `kedro run -p {pipeline_name}`. Pipeline names are in [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py) (for example, `kedro run -p pp` will run the preprocessing pipeline).
+
+   
 ## Contribution
 
 Feel free to create pull requests or open issues to discuss improvements and new ideas.
