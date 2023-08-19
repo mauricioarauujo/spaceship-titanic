@@ -30,7 +30,11 @@ Our workflow follows the Kedro structure:
 - **data/**: Stores raw, intermediate, and processed data.
 - **mlruns/**: Created after the first run. Stores all information (logs, models, parameters, metrics) related to MLflow.
 
-## Pipeline Registry
+## Pipelines
+
+### Pipeline Registry
+
+Pipeline names are in [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py).
 
 - `__default__`: With just `kedro run`, the preprocessing, retraining, and submission data inference pipelines will run.
 - `pp`: Preprocessing
@@ -38,7 +42,7 @@ Our workflow follows the Kedro structure:
 - `tune`: Preprocessing + tuning of different candidate models.
 - `inference`: Takes the production model and performs inference on submission data.
 
-## Pipelines
+### Pipelines Descriptions
 
 - `pp`: Where the data is processed and features are generated. This pipeline is reused during inference.
   
@@ -56,7 +60,7 @@ Our workflow follows the Kedro structure:
 4. Monitor and manage your experiments in MLflow.
 5. Run the training pipeline with the command: `kedro run`
 6. For experiment/run visualizations and models saved with MLflow, run the command: `kedro mlflow ui`
-7. [EXTRA] To run individual pipelines, execute the command: `kedro run -p {pipeline_name}`. Pipeline names are in [src/spaceship_titanic/pipeline_registry.py](src/spaceship_titanic/pipeline_registry.py) (for example, `kedro run -p pp` will run the preprocessing pipeline).
+7. [EXTRA] To run individual pipelines, execute the command: `kedro run -p {pipeline_name}`. For example, `kedro run -p pp` will run the preprocessing pipeline.
 
    
 ## Contribution
