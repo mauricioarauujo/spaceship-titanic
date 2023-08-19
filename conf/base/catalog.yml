@@ -10,35 +10,50 @@ sample_submission:
   type: pandas.CSVDataSet
   filepath: data/01_raw/sample_submission.csv
 
+
 modeling_data:
-  type: pandas.ParquetDataSet
-  filepath: data/03_primary/modeling_data.parquet
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: pandas.ParquetDataSet  
+        filepath: data/03_primary/modeling_data.parquet
 
 inference_data:
-  type: pandas.ParquetDataSet
-  filepath: data/03_primary/inference_data.parquet
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: pandas.ParquetDataSet  
+        filepath: data/03_primary/inference_data.parquet
 
 submission_data:
-  type: pandas.CSVDataSet
-  filepath: data/07_model_output/submission_data.csv
-  save_args:
-    index: False
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: pandas.CSVDataSet  
+        filepath: data/07_model_output/submission_data.csv
+        save_args:
+            index: False
 
 X_train:
-  type: pandas.ParquetDataSet
-  filepath: data/05_model_input/X_train.parquet
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: pandas.ParquetDataSet  
+        filepath: data/05_model_input/X_train.parquet
 
 y_train:
-  type: pandas.ParquetDataSet
-  filepath: data/05_model_input/y_train.parquet
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: pandas.ParquetDataSet  
+        filepath: data/05_model_input/y_train.parquet
 
 X_test:
-  type: pandas.ParquetDataSet
-  filepath: data/05_model_input/X_test.parquet
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: pandas.ParquetDataSet  
+        filepath: data/05_model_input/X_test.parquet
 
 y_test:
-  type: pandas.ParquetDataSet
-  filepath: data/05_model_input/y_test.parquet  
+    type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+    data_set:
+        type: pandas.ParquetDataSet  
+        filepath: data/05_model_input/y_test.parquet
 
 candidate_model:
     type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet

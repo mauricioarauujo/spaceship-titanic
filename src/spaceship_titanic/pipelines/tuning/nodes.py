@@ -222,6 +222,7 @@ def compare_candidate_model(
                 artifact_path="Production",
                 sk_model=candidate_model,
                 registered_model_name=parameters["model_name"],
+                input_example=X.iloc[0:3],
             )
             client.transition_model_version_stage(
                 name=parameters["model_name"], version=1, stage="Production"
@@ -250,10 +251,13 @@ def compare_candidate_model(
         )
         logger.info(f"Candidate is better than production by {improvement_percent}%")
         mlflow.log_metric("pct_model_improvement", improvement_percent)
+
+        candidate_model.fit(X, y)
         mlflow.sklearn.log_model(
             artifact_path="Production",
             sk_model=candidate_model,
             registered_model_name=parameters["model_name"],
+            input_example=X.iloc[0:3],
         )
         client.transition_model_version_stage(
             name=parameters["model_name"],
