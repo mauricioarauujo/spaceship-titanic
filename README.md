@@ -6,6 +6,19 @@ Welcome to the Spaceship-Titanic project repository, where we explore and apply 
 
 The Spaceship-Titanic project is an exciting journey to explore and analyze the famous Titanic dataset available on Kaggle. We use Kedro to structure our data science workflow and MLflow to track and manage our models. This allows us to achieve a more organized and reproducible development process.
 
+While the primary focus of this project is the implementation of MLOps practices using Kedro and MLflow, it's gratifying to note that we've achieved a respectable position on the Kaggle leaderboard. Currently, we are ranked in the top 14% in the Titanic Kaggle competition with not as much effort (yet) put into exploratory analysis and feature engineering.
+
+This achievement demonstrates that it is possible to balance the implementation of efficient development, training, and model monitoring processes with competitive performance in Machine Learning competitions.
+
+In this project, we have applied MLOps practices, including:
+
+- Utilizing Kedro to structure the data science workflow.
+- Tracking metrics, experiments, and model versions with MLflow.
+- Automated model "deployment" to ensure environment consistency.
+- Continuous integration and continuous delivery (CI/CD) to automate model training and "deployment".
+
+We are pleased to share our journey of learning and applying MLOps with you in this project.
+
 ## Key Features
 
 - Project structuring using Kedro for scalable and modular organization.
