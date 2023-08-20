@@ -64,9 +64,9 @@ Pipeline names are in [src/spaceship_titanic/pipeline_registry.py](src/spaceship
 2. Install the necessary dependencies: `make install` for runtime and `make install-dev` for development.
 3. Explore the Kedro workflow in [src/](src/).
 4. Monitor and manage your experiments in MLflow.
-5. Run the training pipeline with the command: `kedro run`
-6. For experiment/run visualizations and models saved with MLflow, run the command: `kedro mlflow ui`
-7. [EXTRA] To run individual pipelines, execute the command: `kedro run -p {pipeline_name}`. For example, `kedro run -p pp` will run the preprocessing pipeline.
+5. Run the default pipeline with the command: `kedro run`
+6. To run individual pipelines, execute the command: `kedro run -p {pipeline_name}`. For example, `kedro run -p pp` will run the preprocessing pipeline. Usually, we will want to run the tuning pipeline (which may take some time) to deploy a good model in production and then run the inference pipeline.
+7. For experiment/run visualizations and models saved with MLflow, run the command: `kedro mlflow ui`. Furthermore, through this interface, we can manually manage which registered models will be used in production.
 
    
 ## Contribution
