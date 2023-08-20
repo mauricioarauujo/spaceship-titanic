@@ -36,7 +36,8 @@ More info: [Kedro Architure Overview](https://docs.kedro.org/en/0.18.3/faq/archi
 
 ## Workflow
 
-![image](https://github.com/mauricioarauujo/spaceship-titanic/assets/58861384/b9beb62c-4afc-48ff-8a27-1107a0b8733e)
+<img width="778" alt="image" src="https://github.com/mauricioarauujo/spaceship-titanic/assets/58861384/f3373ce0-e5c8-47da-af3c-bb75bfbc1fec">
+
 
 ## Pipelines
 
