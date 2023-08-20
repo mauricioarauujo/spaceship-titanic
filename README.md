@@ -57,7 +57,7 @@ Pipeline names are in [src/spaceship_titanic/pipeline_registry.py](src/spaceship
   
 - `train`: The production model is loaded and retrained with new data. The production model is replaced by the retrained model only when the retrained model's performance on the new test data is at least 3% better than the performance of the current untrained model. Such verification does not make sense for this project since the data is static.
   
-- `tune`: Among a series of candidate models, each model is tuned with training data, and the model that performs best on test data is selected. Afterward, it is automatically verified if this model is superior to the current production model; if yes, this model is registered in staging. If there is no production model (for example, the first run), the candidate model is automatically saved if its performance is better than a given threshold.
+- `tune`: Among a series of candidate models, each model is tuned with training data (X_train, y_train), and the model that performs best on test data (X_test, y_test) is selected. Afterward, it is automatically verified if this model is superior to the current production model; if yes, this model is registered in staging. If there is no production model (for example, the first run), the candidate model is automatically saved if its performance is better than a given threshold.
   
 - `inference`: In the submission competition's feature data, the same preprocessing and data treatments as the training data are applied. Upon these data, the production model is used to generate the submission csv file with IDs and predictions.
 
