@@ -1,6 +1,6 @@
 # Kaggle's Spaceship-Titanic Project with Kedro and MLflow.
 
-Welcome to the Spaceship-Titanic project repository, where we explore and apply MLOps techniques using the Kedro and MLflow tools. In this project, I aim to enhance my experiences in developing, training, and deploying Machine Learning models, following best practices.
+Welcome to the Spaceship-Titanic project repository, where I explore and apply MLOps techniques using the Kedro and MLflow tools. In this project, I aim to enhance my experiences in developing, training, and deploying Machine Learning models, following best practices.
 
 ## About the Project
 
@@ -12,14 +12,14 @@ While the primary focus of this project is the implementation of MLOps practices
 
 This achievement demonstrates that it is possible to balance the implementation of efficient development, training, and model monitoring processes with competitive performance in Machine Learning competitions.
 
-In this project, we have applied MLOps practices, including:
+In this project, I have applied MLOps practices, including:
 
 - Utilizing Kedro to structure the data science workflow.
 - Tracking metrics, experiments, and model versions with MLflow.
 - Automated model "deployment" to ensure environment consistency.
 - Continuous integration and continuous delivery (CI/CD) to automate model training and "deployment".
 
-We are pleased to share our journey of learning and applying MLOps with you in this project.
+I'm pleased to share my journey of learning and applying MLOps with you in this project.
 
 ## Directories
 
